@@ -19,12 +19,14 @@ def triangle(side):
     return points
 
 def next(polys, anim,side,i):
-    poly = Polygon(triangle(side))
-    #poly = Point((np.random.rand()*side, np.random.rand()*side)).buffer(1)
+    #poly = Polygon(triangle(side))
+    poly = Point((np.random.rand()*side, np.random.rand()*side)).buffer(1)
 
     polys.append(poly)
     mergedPolys = unary_union(polys)
-
+    if(i%10 == 0):
+        box = Polygon([(0,0), (0,side), (side,side), (side,0)])
+        mergedPolys = intersection(mergedPolys,box)
     polys = []
     if mergedPolys.geom_type == "Polygon":
         polys.append(mergedPolys)
@@ -32,10 +34,6 @@ def next(polys, anim,side,i):
     elif mergedPolys.geom_type == "MultiPolygon":
         for poly in mergedPolys.geoms:
             polys.append(poly)
-    if(i%100 == 0):
-        box = Polygon([(0,0), (0,side), (side,side), (side,0)])
-        poly = intersection(poly,box)
-
     return polys
     
 
@@ -96,18 +94,20 @@ n = 100, runs = 100
 25.91
 399.67
 ___________________________
+___________________________
+Triangle n=10000, runs = 8
 Mean of left right:  2348.25
 [2338, 2268, 2250, 2479, 2254, 2518, 2366, 2313]
 Mean of fill:  57356.375
 [53452, 45398, 57416, 61918, 69633, 56701, 58015, 56318]
-
+___________________________
 
 """
 if __name__ == "__main__":
 
-    n = 10000 # area
+    n = 100 # area
     side = np.sqrt(n)
-    num_trial = 8
+    num_trial = 100
     animate = False
     
     manager = multiprocessing.Manager()
@@ -125,6 +125,6 @@ if __name__ == "__main__":
     print("Done")
 
     print('Mean of left right: ', np.mean(left_right_list)) 
-    print(left_right_list)
+    #print(left_right_list)
     print('Mean of fill: ', np.mean(fill_list))
-    print(fill_list)
+    #print(fill_list)

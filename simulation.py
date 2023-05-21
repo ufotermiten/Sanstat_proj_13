@@ -91,11 +91,11 @@ ___________________________
 
 """
 if __name__ == "__main__":
-    shape = 'Circle'
-    # shape = 'Triangle'
-    n = 100 # area
+    #shape = 'Circle'
+    shape = 'Triangle'
+    n = 1000 # area
     side = np.sqrt(n)
-    num_trial = 16
+    num_trial = 500
     
     manager = multiprocessing.Manager()
     left_right_list = manager.list()
@@ -117,6 +117,7 @@ if __name__ == "__main__":
     valuefile.write(
 f"""__________
 Shape: {shape}
+Area: {n}
 Number of Trials: {num_trial}
 Mean of left-right: {np.mean(left_right_list)}
 Mean of fill: {np.mean(fill_list)}

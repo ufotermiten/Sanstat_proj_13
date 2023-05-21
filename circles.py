@@ -11,10 +11,10 @@ Triangle_hight = np.sqrt(3)/2*Triangle_side
 
 n = 100 # area
 side = np.sqrt(n)
-num_trial = 1000
+num_trial = 1
 
-# animate = True
-animate = False
+animate = True
+# animate = False
 
 def axes_config():
     ax.clear()

@@ -1,6 +1,28 @@
 __________
 Shape: Circle
-Number of Trials: 16
-Mean of left-right: 40.5625
-Mean of fill: 378.25
+Area: 1000
+Number of Trials: 500
+Mean of left-right: 366.572
+Mean of fill: 4612.0
+__________
+__________
+Shape: Circle
+Area: 100
+Number of Trials: 1000
+Mean of left-right: 39.745
+Mean of fill: 388.759
+__________
+__________
+Shape: Triangle
+Area: 100
+Number of Trials: 1000
+Mean of left-right: 26.78
+Mean of fill: 419.236
+__________
+__________
+Shape: Triangle
+Area: 1000
+Number of Trials: 500
+Mean of left-right: 244.27
+Mean of fill: 4950.178
 __________

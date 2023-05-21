@@ -1,0 +1,6 @@
+__________
+Shape: Circle
+Number of Trials: 16
+Mean of left-right: 40.5625
+Mean of fill: 378.25
+__________

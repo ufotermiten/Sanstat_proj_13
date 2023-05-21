@@ -93,9 +93,9 @@ ___________________________
 if __name__ == "__main__":
     shape = 'Circle'
     # shape = 'Triangle'
-    n = 1000 # area
+    n = 100 # area
     side = np.sqrt(n)
-    num_trial = 100
+    num_trial = 16
     
     manager = multiprocessing.Manager()
     left_right_list = manager.list()
@@ -113,7 +113,7 @@ if __name__ == "__main__":
     print('Mean of left right: ', np.mean(left_right_list)) 
     print('Mean of fill: ', np.mean(fill_list))
     
-    valuefile = open('values.txt','a')
+    valuefile = open("Sanstat_proj_13/values.txt",'a')
     valuefile.write(
 f"""__________
 Shape: {shape}
@@ -122,7 +122,7 @@ Mean of left-right: {np.mean(left_right_list)}
 Mean of fill: {np.mean(fill_list)}
 __________
 """)
-    datafile = open('data.csv','a')
+    datafile = open('Sanstat_proj_13/data.csv','a')
     write = csv.writer(datafile)
     write.writerow([shape,n,num_trial,fill_list])
     print("Done")

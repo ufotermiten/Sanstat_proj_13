@@ -6,6 +6,7 @@ from shapely.ops import unary_union
 import numpy as np
 from shapely import intersection
 import multiprocessing
+import csv
 
 def triangle(side):
     center = (np.random.rand()*side, np.random.rand()*side)
@@ -18,13 +19,14 @@ def triangle(side):
     ]
     return points
 
-def next(polys, anim,side,i):
-    #poly = Polygon(triangle(side))
-    poly = Point((np.random.rand()*side, np.random.rand()*side)).buffer(1)
-
+def next(polys,side,iter,shape):
+    if shape =='Circle':
+        poly = Point((np.random.rand()*side, np.random.rand()*side)).buffer(1)
+    elif shape == 'Triangle':
+        poly = Polygon(triangle(side))
     polys.append(poly)
     mergedPolys = unary_union(polys)
-    if(i%10 == 0):
+    if(iter%10 == 0):
         box = Polygon([(0,0), (0,side), (side,side), (side,0)])
         mergedPolys = intersection(mergedPolys,box)
     polys = []
@@ -36,25 +38,21 @@ def next(polys, anim,side,i):
             polys.append(poly)
     return polys
     
-
-def left_right(anim,side):
+def left_right(side,shape):
     iter = 0
     polys = []
     while True:
         iter += 1
-        polys = next(polys, anim,side,iter)
-        if(iter%1000==0):
-            print(iter)
+        polys = next(polys,side,iter,shape)
 
         # Check if any group touches both the left and right wall
         for poly in polys:
             if poly.bounds[0] <= 0 and poly.bounds[2]>= side:
                 return iter, polys
 
+def run_trial(left_right_list,fill_list,side,shape):
 
-def run_trial(left_right_list,fill_list,n,animate,side):
-
-    left_right_n, polys = left_right(animate,side)
+    left_right_n, polys = left_right(side,shape)
 
     #print(f"triangles required to connect left and tight sides for n = {n} is {left_right_n}")
 
@@ -65,9 +63,7 @@ def run_trial(left_right_list,fill_list,n,animate,side):
 
     while True:
         i += 1
-        polys = next(polys, animate,side,i)
-        if(i%1000==0):
-            print(i)
+        polys = next(polys,side,i,shape)
         if intersection(unary_union(polys), box).area == box.area:
             break
     
@@ -75,15 +71,6 @@ def run_trial(left_right_list,fill_list,n,animate,side):
     left_right_list.append(left_right_n)
     fill_list.append(i)
     return left_right_n, i
-
-
-
-
-# trials = np.array([run_trial(n, animate) for _ in range(num_trial)])
-# print(np.mean(trials[:, 0]))
-# print(np.mean(trials[:, 1]))
-
-#run_trial(n, animate)
 
 
 
@@ -104,27 +91,38 @@ ___________________________
 
 """
 if __name__ == "__main__":
-
-    n = 100 # area
+    shape = 'Circle'
+    # shape = 'Triangle'
+    n = 1000 # area
     side = np.sqrt(n)
     num_trial = 100
-    animate = False
     
     manager = multiprocessing.Manager()
     left_right_list = manager.list()
     fill_list = manager.list()
-
-    workers = [multiprocessing.Process(target=run_trial, args=(left_right_list,fill_list,n,animate,side), daemon=True) for i in range(num_trial)]
-
+    
+    workers = [multiprocessing.Process(target=run_trial, args=(left_right_list,fill_list,side,shape), daemon=True) for i in range(num_trial)]
+    
     print("Starting")
     for w in workers:
         w.start()
     print("Waiting")
-    for w in workers:
+    for i,w in enumerate(workers):
         w.join()
-    print("Done")
-
+    
     print('Mean of left right: ', np.mean(left_right_list)) 
-    #print(left_right_list)
     print('Mean of fill: ', np.mean(fill_list))
-    #print(fill_list)
+    
+    valuefile = open('values.txt','a')
+    valuefile.write(
+f"""__________
+Shape: {shape}
+Number of Trials: {num_trial}
+Mean of left-right: {np.mean(left_right_list)}
+Mean of fill: {np.mean(fill_list)}
+__________
+""")
+    datafile = open('data.csv','a')
+    write = csv.writer(datafile)
+    write.writerow([shape,n,num_trial,fill_list])
+    print("Done")

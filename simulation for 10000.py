@@ -94,38 +94,41 @@ if __name__ == "__main__":
     shape = 'Circle'
     # shape = 'Triangle'
     n = 10000 # area
-    num_trial = 100
+    num_trial = 24
     side = np.sqrt(n)
     
     start_time = time.time()
     manager = multiprocessing.Manager()
     left_right_list = manager.list()
     fill_list = manager.list()
+    pool = multiprocessing.Pool()
+    output = pool.starmap(run_trial,[[left_right_list,fill_list,side] for i in range(num_trial)])
     
-    workers = [multiprocessing.Process(target=run_trial, args=(left_right_list,fill_list,side), daemon=True) for i in range(num_trial)]
+    # workers = [multiprocessing.Process(target=run_trial, args=(left_right_list,fill_list,side), daemon=True) for i in range(num_trial)]
     
-    print("Starting")
-    for w in workers:
-        w.start()
-    print("Waiting")
-    for i,w in enumerate(workers):
-        w.join()
-    
+    # print("Starting")
+    # for w in workers:
+    #     w.start()
+    # print("Waiting")
+    # for i,w in enumerate(workers):
+    #     w.join()
+    left_right2 = [item[0] for item in output] #fix this tmrw
+    print(np.mean(left_right2))
     print('Mean of left right: ', np.mean(left_right_list)) 
     print('Mean of fill: ', np.mean(fill_list))
     
-    valuefile = open("Sanstat_proj_13/values.txt",'a')
-    valuefile.write(
-f"""__________
-Shape: {shape}
-Area: {n}
-Number of Trials: {num_trial}
-Mean of left-right: {np.mean(left_right_list)}
-Mean of fill: {np.mean(fill_list)}
-__________
-""")
-    datafile = open('Sanstat_proj_13/data.csv','a')
-    write = csv.writer(datafile)
-    write.writerow([shape,n,num_trial,fill_list])
+#     valuefile = open("Sanstat_proj_13/values.txt",'a')
+#     valuefile.write(
+# f"""__________
+# Shape: {shape}
+# Area: {n}
+# Number of Trials: {num_trial}
+# Mean of left-right: {np.mean(left_right_list)}
+# Mean of fill: {np.mean(fill_list)}
+# __________
+# """)
+#     datafile = open('Sanstat_proj_13/data.csv','a')
+#     write = csv.writer(datafile)
+#     write.writerow([shape,n,num_trial,fill_list])
     print("Done")
     print("Total time: %s seconds" % (time.time() - start_time))

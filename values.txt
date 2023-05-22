@@ -26,3 +26,10 @@ Number of Trials: 500
 Mean of left-right: 244.27
 Mean of fill: 4950.178
 __________
+__________
+Shape: Circle
+Area: 10000
+Number of Trials: 12
+Mean of left-right: 3608.3333333333335
+Mean of fill: 53683.333333333336
+__________

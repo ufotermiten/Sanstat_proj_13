@@ -9,7 +9,7 @@ from shapely import intersection
 Triangle_side = 2*np.sqrt(np.pi/np.sqrt(3))
 Triangle_hight = np.sqrt(3)/2*Triangle_side
 
-n = 100 # area
+n = 10000 # area
 side = np.sqrt(n)
 num_trial = 1
 

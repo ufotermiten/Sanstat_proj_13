@@ -129,6 +129,7 @@ __________
 """)
     datafile = open('Sanstat_proj_13/data.csv','a')
     write = csv.writer(datafile)
-    write.writerow([shape,n,num_trial,fill_list])
+    write.writerow(['fill',shape,n,num_trial,fill_list])
+    write.writerow(['lr',shape,n,num_trial,left_right_list])
     print("Done")
     print("Total time: %s seconds" % (time.time() - start_time))

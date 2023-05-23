@@ -94,7 +94,7 @@ if __name__ == "__main__":
     shape = 'Circle'
     # shape = 'Triangle'
     n = 10000 # area
-    num_trial = 150
+    num_trial = 165
     side = np.sqrt(n)
     
     start_time = time.time()

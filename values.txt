@@ -40,3 +40,45 @@ Number of Trials: 150
 Mean of left-right: 3642.3333333333335
 Mean of fill: 54579.0
 __________
+__________
+Shape: Triangle
+Area: 10000
+Number of Trials: 165
+Mean of left-right: 2417.5757575757575
+Mean of fill: 57292.121212121216
+__________
+__________
+Shape: Circle
+Area: 10000
+Number of Trials: 165
+Mean of left-right: 3602.4242424242425
+Mean of fill: 54823.93939393939
+__________
+__________
+Shape: Triangle
+Area: 1000
+Number of Trials: 1001
+Mean of left-right: 243.36063936063937
+Mean of fill: 4996.325674325674
+__________
+__________
+Shape: Circle
+Area: 1000
+Number of Trials: 1001
+Mean of left-right: 365.1818181818182
+Mean of fill: 4668.168831168831
+__________
+__________
+Shape: Circle
+Area: 100
+Number of Trials: 1001
+Mean of left-right: 39.35864135864136
+Mean of fill: 388.2917082917083
+__________
+__________
+Shape: Triangle
+Area: 100
+Number of Trials: 1001
+Mean of left-right: 26.8011988011988
+Mean of fill: 426.08891108891106
+__________

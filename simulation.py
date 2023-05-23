@@ -91,25 +91,23 @@ ___________________________
 
 """
 if __name__ == "__main__":
-    #shape = 'Circle'
+    # shape = 'Circle'
     shape = 'Triangle'
-    n = 1000 # area
+    n = 100 # area
     side = np.sqrt(n)
-    num_trial = 500
+    num_trial = 1001
     
     manager = multiprocessing.Manager()
     left_right_list = manager.list()
     fill_list = manager.list()
-    
-    workers = [multiprocessing.Process(target=run_trial, args=(left_right_list,fill_list,side,shape), daemon=True) for i in range(num_trial)]
-    
-    print("Starting")
-    for w in workers:
-        w.start()
-    print("Waiting")
-    for i,w in enumerate(workers):
-        w.join()
-    
+    for j in range(int(num_trial/(multiprocessing.cpu_count()-1))):
+        workers = [multiprocessing.Process(target=run_trial, args=(left_right_list,fill_list,side,shape), daemon=True) for i in range(multiprocessing.cpu_count()-1)]
+        print("Starting")
+        for w in workers:
+            w.start()
+        print("Waiting")
+        for i,w in enumerate(workers):
+            w.join()
     print('Mean of left right: ', np.mean(left_right_list)) 
     print('Mean of fill: ', np.mean(fill_list))
     
